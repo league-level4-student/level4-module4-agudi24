@@ -2,26 +2,39 @@ package _03_polymorphs;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.MouseInfo;
-import java.awt.Point;
+import java.util.Random;
 
-public class MovingMorph extends Polymorph {
-	Point mouse;
-	MovingMorph(int x, int y){
-		super(x, y);
+public class MovingMorph extends Polymorph{
+	
+	Random rand;
+	int i;
+	int xPos;
+	int yPos;
+
+	MovingMorph(int x, int y, int width, int height) {
+		super(x, y, width, height);
+		// TODO Auto-generated constructor stub
+		rand = new Random();
+		xPos = x;
+		yPos = y;
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		g.setColor(Color.CYAN);
-		g.fillRect(x, y, width, height);
-	}
-	public void update() {
-		mouse = MouseInfo.getPointerInfo().getLocation();
-		y = mouse.y;
-		x = mouse.x;
-		theta++;
+		g.setColor(Color.cyan);
+		g.fillRect(getX(), getY(), getWidth(), getHeight());
 	}
 	
+	public void update() {
+		if (i % 2 == 0) { 
+			setX(xPos + rand.nextInt(30));
+			setY(yPos + rand.nextInt(30));
+		} else {
+			setX(xPos - rand.nextInt(30));
+			setY(yPos - rand.nextInt(30));
+		}
+		xPos++;
+		yPos++;
+	}
+
 }

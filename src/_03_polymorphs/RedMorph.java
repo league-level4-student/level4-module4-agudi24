@@ -4,14 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class RedMorph extends Polymorph{
-	RedMorph(int x, int y) {
-		super(x, y);
+
+	RedMorph(int x, int y, int w, int h) {
+		super(x, y, w, h);
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.red);
-		g.fillRect(x, y, width, height);
+		g.fillRect(getX(), getY(), getWidth(), getHeight());
 	}
 	
 }

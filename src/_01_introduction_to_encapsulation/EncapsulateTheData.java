@@ -1,5 +1,9 @@
 package _01_introduction_to_encapsulation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 /*
  * Encapsulation is a way of protecting the data in a class from being
  * unintentionally altered from another class.
@@ -23,59 +27,84 @@ public class EncapsulateTheData {
 	//2. Create a new JUnit Test case and write tests to verify that 
 	//   the member variables' getters and setters are working
 	
-	private int itemsReceived; //must not be negative. All negative arguments get set to 0.
-	private float degreesTurned; //must be locked between 0.0 and 360.0 inclusive.
-	private String nomenclature = " "; //must not be set to a blank string. Blank Strings get set to a space
-	private Object memberObj;  //must not be a String.  If it is a String, set it equal to a new Object();
+	protected static int itemsReceived; //must not be negative. All negative arguments get set to 0.
+	private static float degreesTurned; //must be locked between 0.0 and 360.0 inclusive.
+	protected static String nomenclature = " "; //must not be set to a blank string. Blank Strings get set to a space
+	private static Object memberObj;  //must not be a String.  If it is a String, set it equal to a new Object();
 	
-	public static void main(String[] args) {
-		
-	}
-
-	public int getItemsReceived() {
+	static int getItemsReceived() {
 		return itemsReceived;
 	}
-
-	public void setItemsReceived(int itemsReceived) {
-		this.itemsReceived = itemsReceived;
-		if(itemsReceived < 0) {
-			itemsReceived = 0;
-		}
-	}
-
-	public float getDegreesTurned() {
+	
+	static float getDegreesTurned() {
 		return degreesTurned;
 	}
-
-	public void setDegreesTurned(float degreesTurned) {
-		this.degreesTurned = degreesTurned;
-		if(degreesTurned < 0) {
-			degreesTurned = 0;
-		}
-		if(degreesTurned > 360) {
-			degreesTurned = 360;
-		}
-	}
-
-	public String getNomenclature() {
+	
+	static String getNomenclature() {
 		return nomenclature;
 	}
-
-	public void setNomenclature(String nomenclature) {
-		this.nomenclature = nomenclature;
-		if(nomenclature.equalsIgnoreCase("")) {
-			nomenclature.equals(" ");
-		}
-	}
-
-	public Object getMemberObj() {
+	
+	static Object getMemberObj() {
 		return memberObj;
 	}
-
-	public void setMemberObj(Object memberObj) {
-		this.memberObj = memberObj;
-		if (memberObj instanceof String) {
-			memberObj = new Object(); 
+	
+	static void setItemsReceived(int i) {
+		if (i < 0) {
+			itemsReceived = 0;
+		} else {
+			itemsReceived = i;
 		}
+	}
+	
+	static void setDegreesTurned(float f) {
+		if (0.0 < f  && f < 360.0) {
+			degreesTurned = f;
+		}
+	}
+	
+	static void setNomenclature(String s) {
+		if (s.equals("")) {
+			nomenclature = " ";
+		} else {
+			nomenclature = s;
+		}
+	}
+	
+	static void setMemberObj(Object o) {
+		System.out.println(o.getClass().toString());
+		if (o.getClass().toString().equals("class java.lang.String")) {
+			memberObj = new Object();
+		} else {
+			memberObj = o;
+		}
+	}
+	
+	@Test
+	static
+	void testGetters1() {
+		assertEquals(1, getItemsReceived());
+		assertEquals(270.0f, getDegreesTurned());
+		assertEquals("Hi", getNomenclature());
+		assertEquals(2, getMemberObj());
+	}
+	
+	static void testGetters2() {
+		assertEquals(0, getItemsReceived());
+		assertEquals(270.0f, getDegreesTurned());
+		assertEquals(" ", getNomenclature());
+		assertEquals(new Object(), getMemberObj()); //this is false because the objects are not exactly the same but it does make a new object
+	}
+	
+	public static void main(String[] args) {
+		setItemsReceived(1);
+		setDegreesTurned(270.0f);
+		setNomenclature("Hi");
+		setMemberObj(2);
+		testGetters1();
+		setItemsReceived(-3);
+		setDegreesTurned(361.0f);
+		setNomenclature("");
+		setMemberObj("aghfgsd");
+		testGetters2();
 	}
 }
